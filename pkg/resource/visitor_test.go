@@ -179,4 +179,15 @@ func TestFlattenListVisitor(t *testing.T) {
 	if len(test.Infos) != 6 {
 		t.Fatal(spew.Sdump(test.Infos))
 	}
+
+			b = newDefaultBuilder().
+			FilenameParam(false, &FilenameOptions{Recursive: false, Filenames: []string{"../../artifacts/missing-resource.yaml"}}).
+			ContinueOnError().
+			Flatten()
+
+	test2 := &testVisitor{}
+	err = b.Do().Visit(test2.Handle)
+		if len(test2.Infos) != 2 {
+		t.Fatal(spew.Sdump(test2.Infos))
+	}
 }
